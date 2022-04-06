@@ -1,0 +1,34 @@
+{
+    "name": "Mouse",
+    "maps": [
+        {
+            "name": "Mouse",
+            "id": "a11c4fbf-a4c9-43bd-9890-a7cb4e17c47e",
+            "actions": [
+                {
+                    "name": "LeftRightRotation",
+                    "type": "Value",
+                    "id": "5d93a955-5a29-47a4-883d-1ee7b2d45e2d",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "25d6191b-4052-415a-a1f2-67feab1fbdb8",
+                    "path": "<Mouse>/delta/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftRightRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
