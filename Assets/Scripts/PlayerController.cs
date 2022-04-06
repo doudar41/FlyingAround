@@ -6,7 +6,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float pitchFactor = -0.3f, yawFactor = 0.3f;
+
+    [Tooltip ("Increase/Decrease speed of gun rotation")][SerializeField] float pitchFactor = -0.3f, yawFactor = 0.3f;
+    [Tooltip("Limit of gun pitch rotation")] [SerializeField] float clampPitchMin = -50f, clampPitchMax = 10f;
+
     float yaw = 0;
     float pitch = 0;
 
@@ -20,7 +23,7 @@ public class PlayerController : MonoBehaviour
         
         yaw = input.ReadValue<Vector2>().x * yawFactor + yaw;
         pitch = input.ReadValue<Vector2>().y * pitchFactor + pitch;
-        float pitchClamped = Mathf.Clamp(pitch, -50f, 10f);
+        float pitchClamped = Mathf.Clamp(pitch, clampPitchMin, clampPitchMax);
 
         transform.localRotation = Quaternion.Euler(pitchClamped, yaw, 0);
     }

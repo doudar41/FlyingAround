@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class lookahead : MonoBehaviour
+
+
+
+public class TargetingAndShooting : MonoBehaviour
 {
     private Vector3 dir;
     private float rotationSpeed = 10f;
@@ -11,52 +14,44 @@ public class lookahead : MonoBehaviour
     [SerializeField]Camera _camera;
     [SerializeField] GameObject launchPoint;
     [SerializeField] launchProjectile projectile;
+    [SerializeField] ParticleSystem fireLaserBeams;
     private bool fireBool = false;
 
     private void Start()
-    {
-        StartCoroutine(Firing());
+    {        
+        var em = fireLaserBeams.emission;
+        em.enabled = false;
+        fireLaserBeams.Play();
     }
 
-    void Update()
-    {
-        Transform cameraTransform = _camera.transform;
-
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out HitInfo, 300.0f))
-            Debug.DrawRay(cameraTransform.position, cameraTransform.forward * 100.0f, Color.red);
-
-        //if (HitInfo.collider.tag != null) { Debug.Log(HitInfo.collider.tag); }
-    }
 
     public void FireProjectile(InputAction.CallbackContext input)
     {
 
+        var em = fireLaserBeams.emission;
         if (input.performed) // the key has been pressed
         {
             fireBool = true;
+            em.enabled = true;
         }
 
         if (input.canceled) //the key has been released
         {
+            em.enabled = false;
             fireBool = false;
-        }
-    }
-
-    IEnumerator Firing()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(0.1f);
-            FiringP();
         }
     }
 
     void FiringP()
     {
+        var em = fireLaserBeams.emission;
         if (fireBool)
         {
-            var x = Instantiate(projectile, launchPoint.transform);
-            x.player = true;
+            em.enabled = true;
+        }
+        else
+        {
+            em.enabled = false;
         }
         
     }
