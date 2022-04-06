@@ -22,9 +22,8 @@ public class TargetingAndShooting : MonoBehaviour
         var em = fireLaserBeams.emission;
         em.enabled = false;
         fireLaserBeams.Play();
+        
     }
-
-
     public void FireProjectile(InputAction.CallbackContext input)
     {
 

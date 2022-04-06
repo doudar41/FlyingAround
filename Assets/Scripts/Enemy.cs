@@ -27,6 +27,14 @@ public class Enemy : MonoBehaviour
     }
 
 
+
+    private void OnParticleCollision(GameObject other)
+    {
+        Debug.Log("test");
+    }
+
+
+
     void FireProjectile()
     {
 
