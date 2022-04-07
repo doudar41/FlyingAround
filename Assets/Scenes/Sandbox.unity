@@ -10677,6 +10677,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8364267567910377313, guid: 4cbe6a5fc27e7ab449b02afc7914ad9d, type: 3}
+      propertyPath: lengthInSec
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8364267567910377313, guid: 4cbe6a5fc27e7ab449b02afc7914ad9d, type: 3}
+      propertyPath: TrailModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8364267567910377313, guid: 4cbe6a5fc27e7ab449b02afc7914ad9d, type: 3}
+      propertyPath: ShapeModule.arc.mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8364267567910377313, guid: 4cbe6a5fc27e7ab449b02afc7914ad9d, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8364267567910377313, guid: 4cbe6a5fc27e7ab449b02afc7914ad9d, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8364267567910377313, guid: 4cbe6a5fc27e7ab449b02afc7914ad9d, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8364267567910377313, guid: 4cbe6a5fc27e7ab449b02afc7914ad9d, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8364267567910377313, guid: 4cbe6a5fc27e7ab449b02afc7914ad9d, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8364267567910377313, guid: 4cbe6a5fc27e7ab449b02afc7914ad9d, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.47070253
+      objectReference: {fileID: 0}
+    - target: {fileID: 8364267567910377313, guid: 4cbe6a5fc27e7ab449b02afc7914ad9d, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8893534131455708442, guid: 4cbe6a5fc27e7ab449b02afc7914ad9d, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8958985855807624280, guid: 4cbe6a5fc27e7ab449b02afc7914ad9d, type: 3}
       propertyPath: m_RootOrder
       value: 7
