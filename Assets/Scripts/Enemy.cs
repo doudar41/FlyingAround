@@ -14,6 +14,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] Light redLight;
     float delta, currentIntensivity;
 
+
+    [SerializeField] ParticleSystem explosion;
+
+
     void Start()
     {
 
@@ -25,11 +29,20 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        transform.LookAt(player);
-        delta = Vector3.Distance(transform.position, player.position);
-        FireProjectile();
-    }
+        if(player != null)
+        {
+            transform.LookAt(player);
+            delta = Vector3.Distance(transform.position, player.position);
+            FireProjectile();
+        }
 
+    }
+    private void OnParticleCollision(GameObject other)
+    {
+        explosion.transform.position = gameObject.transform.position;
+        explosion.Play();
+
+    }
 
     void FireProjectile()
     {
