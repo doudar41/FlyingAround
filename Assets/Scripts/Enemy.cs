@@ -11,10 +11,14 @@ public class Enemy : MonoBehaviour
     [SerializeField]  Transform[] spawnPoints;
     [SerializeField] GameObject projectile;
     [SerializeField] float deltaFormant = 100f;
-    float delta;
+    [SerializeField] Light redLight;
+    float delta, currentIntensivity;
 
     void Start()
     {
+
+        redLight.intensity = 0f;
+        currentIntensivity = 0f;
         player = FindObjectOfType<PlayerController>().transform;
         StartCoroutine(Firing());
     }
@@ -24,13 +28,6 @@ public class Enemy : MonoBehaviour
         transform.LookAt(player);
         delta = Vector3.Distance(transform.position, player.position);
         FireProjectile();
-    }
-
-
-
-    private void OnParticleCollision(GameObject other)
-    {
-        Debug.Log("test");
     }
 
 
@@ -62,11 +59,25 @@ public class Enemy : MonoBehaviour
     {
         if (fireBool)
         {
-            foreach(Transform x in spawnPoints)
-            
-            Instantiate(projectile, x);
+            StartCoroutine(FadeLight(0.1f, 100, 0));
+            foreach (Transform x in spawnPoints) Instantiate(projectile, x);
+        }
+    }
+
+    IEnumerator FadeLight(float duration, float startIntensivity, float targetIntensivity)
+    {
+
+        float startingCoroutine = 0.0f;
+        while (startingCoroutine < duration)
+        {
+            currentIntensivity = Mathf.Lerp(startIntensivity, targetIntensivity, startingCoroutine / duration);
+
+            redLight.intensity = currentIntensivity;
+            startingCoroutine += Time.deltaTime;
+            yield return null;
         }
 
+        redLight.intensity = targetIntensivity;
     }
 
 }
