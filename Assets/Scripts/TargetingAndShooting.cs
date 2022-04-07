@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 public class TargetingAndShooting : MonoBehaviour
 {
     private Vector3 dir;
-    private float rotationSpeed = 10f;
     Ray RayOrigin;
     RaycastHit HitInfo;
     [SerializeField]Camera _camera;

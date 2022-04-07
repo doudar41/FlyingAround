@@ -31,7 +31,6 @@ public class Enemy : MonoBehaviour
     }
 
 
-
     void FireProjectile()
     {
 

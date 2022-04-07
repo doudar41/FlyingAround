@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 53b62e8b5209f134093006a1c00ec75e
+guid: fca14b9ae23d2d34c8c8d5c7ca10daae
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: turret color
+    second: {fileID: 2100000, guid: e90a9ae53bd87cd4ea30ae5468517c63, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
