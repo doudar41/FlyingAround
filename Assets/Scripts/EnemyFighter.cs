@@ -4,52 +4,63 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-    public class Enemy : MonoBehaviour
+    public class EnemyFighter : MonoBehaviour
     {
 
         [SerializeField] int lives = 10;
-        Transform player;
+        Player player;
         private bool fireBool;
         [SerializeField] Transform[] spawnPoints;
         [SerializeField] GameObject projectile;
         [SerializeField] float deltaFormant = 100f;
         [SerializeField] Light redLight;
+        [SerializeField] GameObject fighter;
+        VfxDestroyer vfxDestroyer;
+        SpawnManager spawn;
+        GameBase gamebase;
         float delta, currentIntensivity;
-    GameBase gameBase;
 
-        [SerializeField] ParticleSystem explosion, smoke, fire, finaleBlow;
+
+        [SerializeField] ParticleSystem explosion, finaleBlow;
 
         public event Action deathEnemy;
 
         void Start()
         {
-        gameBase = FindObjectOfType<GameBase>();
-        deathEnemy = DeathEnemy;
+            gamebase = FindObjectOfType<GameBase>();
+            spawn = FindObjectOfType<SpawnManager>();
+            vfxDestroyer = FindObjectOfType<VfxDestroyer>();
+            deathEnemy = DeathEnemy;
             redLight.intensity = 0f;
             currentIntensivity = 0f;
-            player = FindObjectOfType<PlayerController>().transform;
+            player = FindObjectOfType<Player>();
             StartCoroutine(Firing());
         }
 
         void Update()
         {
-            if (player != null)
-            {
-                transform.LookAt(player);
-                delta = Vector3.Distance(transform.position, player.position);
+        if (player != null) return;
+            
+                transform.LookAt(player.transform);
+                delta = Vector3.Distance(transform.position, player.transform.position);
                 FireProjectile();
-            }
+            
 
         }
         private void OnParticleCollision(GameObject other)
         {
+
             lives -= 1;
-            explosion.transform.position = gameObject.transform.position;
-            explosion.Play();
-        if (lives<=0)
-        {
-            deathEnemy?.Invoke(); ;
-        }
+            if(explosion != null)
+                {
+                    explosion.transform.position = gameObject.transform.position;
+                    explosion.Play();
+                }
+
+            if (lives<=0)
+            {
+                deathEnemy?.Invoke();
+            }
 
         }
 
@@ -103,13 +114,18 @@ using UnityEngine;
 
         void DeathEnemy()
         {
-        gameBase.AddScore(10);
-        finaleBlow.Play();
-        smoke.Play();
-        fire.Play();
-        deathEnemy -= DeathEnemy;
-        Destroy(gameObject,3f);
-        }
+            GetComponent<BoxCollider>().enabled = false;
+            gamebase.AddScore(100);
+            spawn.CommandToSpawn();
+            ParticleSystem vfx = Instantiate(finaleBlow, gameObject.transform);
+            vfx.transform.parent = vfxDestroyer.transform;
+            vfxDestroyer.eventHandler(vfx);
+   
+            Destroy(fighter);
+            deathEnemy -= DeathEnemy;
+    }
+
+
 
 }
 

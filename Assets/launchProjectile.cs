@@ -6,7 +6,6 @@ public class launchProjectile : MonoBehaviour
 {
     Rigidbody rb;
     Transform gun;
-   // public event Action projetileHit;
     public bool player = false;
     [SerializeField]ParticleSystem explosion;
 
