@@ -38,7 +38,7 @@ public class GameBase : MonoBehaviour
 
     void EndGame(Vector3 player)
     {
-        scoreContainer.scoreList.Add(score, "me");
+        scoreContainer.scoreList.Add(scoreContainer.scoreList.Count, score);
         Instantiate(cam, player, Quaternion.identity);
         death -= EndGame;
         StartCoroutine(WaitAndLoad());
@@ -46,6 +46,12 @@ public class GameBase : MonoBehaviour
 
     IEnumerator WaitAndLoad()
     {
+        
+        foreach (var i in scoreContainer.scoreList.Values)
+        {
+            Debug.Log(i);
+        }
+        
        
         yield return new WaitForSeconds(5f);
         SceneManager.LoadScene(0);

@@ -9,6 +9,4 @@ public class ScoreBaseScriptable : ScriptableObject
 {
     public OrderedDictionary scoreList = new OrderedDictionary();
     //Dictionary<string, int> scoreList = new Dictionary<string, int>();
-
-
 }
