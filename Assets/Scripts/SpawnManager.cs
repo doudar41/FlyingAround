@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine;using UnityEngine.Playables;
 
 public class SpawnManager : MonoBehaviour
 {
 
-    [SerializeField] GameObject[] fighters;
-    [SerializeField] Transform[] spawnpoint;
+    [SerializeField] GameObject fighter;
+    [SerializeField] PlayableDirector[] spawnpoint;
     [SerializeField] float spawnDelay = 20f;
 
 
@@ -17,10 +17,10 @@ public class SpawnManager : MonoBehaviour
     IEnumerator SpawnAfterDestroy()
     {
         yield return new WaitForSeconds(spawnDelay);
-        foreach(GameObject f in fighters)
-        {
-            Instantiate(f);
-        }
+
+        Instantiate(fighter);
+        spawnpoint[0].SetGenericBinding(spawnpoint[0], fighter);
+
         
     }
     

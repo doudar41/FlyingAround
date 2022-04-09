@@ -9,7 +9,7 @@ using UnityEngine;
 
         [SerializeField] int lives = 10;
         GameObject player;
-        private bool fireBool;
+        private bool fireBool = false, startCoroutine =  true;
         [SerializeField] Transform[] spawnPoints;
         [SerializeField] GameObject projectile;
         [SerializeField] float deltaFormant = 100f;
@@ -34,22 +34,21 @@ using UnityEngine;
             redLight.intensity = 0f;
             currentIntensivity = 0f;
             player = GameObject.FindGameObjectWithTag("Player");
-            StartCoroutine(Firing());
         }
 
-        void Update()
+
+    void Update()
         {
+
         if (player == null) return;
             
                 transform.LookAt(player.transform);
                 delta = Vector3.Distance(transform.position, player.transform.position);
                 FireProjectile();
-            
-
         }
         private void OnParticleCollision(GameObject other)
         {
-
+        Debug.Log("There is collision");
             lives -= 1;
             if(explosion != null)
             {
@@ -67,30 +66,41 @@ using UnityEngine;
 
         void FireProjectile()
         {
-
-            if (delta < deltaFormant)
+        
+        if (delta < deltaFormant)
             {
                 fireBool = true;
+                if (startCoroutine)
+                {
+                    StartCoroutine(Firing());
+                    startCoroutine = false;
+                }
+                
             }
 
             if (delta > deltaFormant)
             {
                 fireBool = false;
+                startCoroutine = true;
             }
         }
 
         IEnumerator Firing()
         {
+        
             while (true)
             {
                 yield return new WaitForSeconds(0.3f);
-                FiringP();
+                SpawnProjectile();
             }
+
+           
         }
 
-        void FiringP()
+        void SpawnProjectile()
         {
-            if (fireBool)
+        
+        if (fireBool)
             {
                 StartCoroutine(FadeLight(0.1f, 100, 0));
                 foreach (Transform x in spawnPoints) Instantiate(projectile, x);
@@ -104,7 +114,6 @@ using UnityEngine;
             while (startingCoroutine < duration)
             {
                 currentIntensivity = Mathf.Lerp(startIntensivity, targetIntensivity, startingCoroutine / duration);
-
                 redLight.intensity = currentIntensivity;
                 startingCoroutine += Time.deltaTime;
                 yield return null;
