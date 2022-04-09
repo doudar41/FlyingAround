@@ -8,7 +8,7 @@ using UnityEngine;
     {
 
         [SerializeField] int lives = 10;
-        Player player;
+        GameObject player;
         private bool fireBool;
         [SerializeField] Transform[] spawnPoints;
         [SerializeField] GameObject projectile;
@@ -33,13 +33,13 @@ using UnityEngine;
             deathEnemy = DeathEnemy;
             redLight.intensity = 0f;
             currentIntensivity = 0f;
-            player = FindObjectOfType<Player>();
+            player = GameObject.FindGameObjectWithTag("Player");
             StartCoroutine(Firing());
         }
 
         void Update()
         {
-        if (player != null) return;
+        if (player == null) return;
             
                 transform.LookAt(player.transform);
                 delta = Vector3.Distance(transform.position, player.transform.position);
@@ -52,10 +52,11 @@ using UnityEngine;
 
             lives -= 1;
             if(explosion != null)
-                {
-                    explosion.transform.position = gameObject.transform.position;
-                    explosion.Play();
-                }
+            {
+                ParticleSystem vfx = Instantiate(explosion, gameObject.transform);
+                vfx.transform.parent = vfxDestroyer.transform;
+                vfxDestroyer.eventHandler(vfx);
+            }
 
             if (lives<=0)
             {
