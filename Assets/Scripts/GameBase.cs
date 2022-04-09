@@ -42,7 +42,6 @@ public class GameBase : MonoBehaviour
         Instantiate(cam, player, Quaternion.identity);
         death -= EndGame;
         StartCoroutine(WaitAndLoad());
-        
     }
 
     IEnumerator WaitAndLoad()

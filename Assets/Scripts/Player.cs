@@ -53,7 +53,6 @@ public class Player : MonoBehaviour
         rail.StopPlayback();
         if (vfxDestroyer != null)
         {
-
             ParticleSystem vfx = Instantiate(explosion, gameObject.transform);
             vfx.transform.parent = vfxDestroyer.transform;
             vfxDestroyer.eventHandler(vfx);
