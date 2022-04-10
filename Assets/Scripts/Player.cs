@@ -49,11 +49,10 @@ public class Player : MonoBehaviour
     {
         GetComponent<Collider>().enabled = false;
         GetComponent<Animator>().enabled = false;
-        gameBase.CallDeath(gameObject.transform.position);
+        gameBase.CallDeath(transform.position);
         rail.StopPlayback();
         if (vfxDestroyer != null)
         {
-
             ParticleSystem vfx = Instantiate(explosion, gameObject.transform);
             vfx.transform.parent = vfxDestroyer.transform;
             vfxDestroyer.eventHandler(vfx);
@@ -64,8 +63,6 @@ public class Player : MonoBehaviour
         {
             i.enabled = false;
         }
-
-
         Destroy(gameObject);
     }
 }

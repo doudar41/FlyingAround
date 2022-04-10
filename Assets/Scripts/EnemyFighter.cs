@@ -8,8 +8,8 @@ using UnityEngine;
     {
 
         [SerializeField] int lives = 10;
-        Player player;
-        private bool fireBool;
+        GameObject player;
+        private bool fireBool = false, startCoroutine =  true;
         [SerializeField] Transform[] spawnPoints;
         [SerializeField] GameObject projectile;
         [SerializeField] float deltaFormant = 100f;
@@ -33,29 +33,29 @@ using UnityEngine;
             deathEnemy = DeathEnemy;
             redLight.intensity = 0f;
             currentIntensivity = 0f;
-            player = FindObjectOfType<Player>();
-            StartCoroutine(Firing());
+            player = GameObject.FindGameObjectWithTag("Player");
         }
 
-        void Update()
+
+    void Update()
         {
-        if (player != null) return;
+
+        if (player == null) return;
             
                 transform.LookAt(player.transform);
                 delta = Vector3.Distance(transform.position, player.transform.position);
                 FireProjectile();
-            
-
         }
         private void OnParticleCollision(GameObject other)
         {
-
+        Debug.Log("There is collision");
             lives -= 1;
             if(explosion != null)
-                {
-                    explosion.transform.position = gameObject.transform.position;
-                    explosion.Play();
-                }
+            {
+                ParticleSystem vfx = Instantiate(explosion, gameObject.transform);
+                vfx.transform.parent = vfxDestroyer.transform;
+                vfxDestroyer.eventHandler(vfx);
+            }
 
             if (lives<=0)
             {
@@ -66,30 +66,39 @@ using UnityEngine;
 
         void FireProjectile()
         {
-
-            if (delta < deltaFormant)
+        
+        if (delta < deltaFormant)
             {
                 fireBool = true;
+                if (startCoroutine)
+                {
+                    StartCoroutine(Firing());
+                    startCoroutine = false;
+                }
+                
             }
 
             if (delta > deltaFormant)
             {
                 fireBool = false;
+                startCoroutine = true;
             }
         }
 
         IEnumerator Firing()
         {
+        
             while (true)
             {
                 yield return new WaitForSeconds(0.3f);
-                FiringP();
+                SpawnProjectile();
             }
         }
 
-        void FiringP()
+        void SpawnProjectile()
         {
-            if (fireBool)
+        
+        if (fireBool)
             {
                 StartCoroutine(FadeLight(0.1f, 100, 0));
                 foreach (Transform x in spawnPoints) Instantiate(projectile, x);
@@ -103,7 +112,6 @@ using UnityEngine;
             while (startingCoroutine < duration)
             {
                 currentIntensivity = Mathf.Lerp(startIntensivity, targetIntensivity, startingCoroutine / duration);
-
                 redLight.intensity = currentIntensivity;
                 startingCoroutine += Time.deltaTime;
                 yield return null;
@@ -116,11 +124,10 @@ using UnityEngine;
         {
             GetComponent<BoxCollider>().enabled = false;
             gamebase.AddScore(100);
-            spawn.CommandToSpawn();
+           // spawn.CommandToSpawn();
             ParticleSystem vfx = Instantiate(finaleBlow, gameObject.transform);
             vfx.transform.parent = vfxDestroyer.transform;
-            vfxDestroyer.eventHandler(vfx);
-   
+
             Destroy(fighter);
             deathEnemy -= DeathEnemy;
     }
