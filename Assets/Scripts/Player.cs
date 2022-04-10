@@ -33,16 +33,13 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        lives -= 1;
-        
-        if (lives <= 0)
-        {
-            lives = 0;
-            healthText.text = 0.ToString();
-            death();
-        }
-        else healthText.text = lives.ToString();
 
+        DamagePlayer();
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        DamagePlayer();
     }
 
     void DestroyShip()
@@ -64,5 +61,18 @@ public class Player : MonoBehaviour
             i.enabled = false;
         }
         Destroy(gameObject);
+    }
+
+    void DamagePlayer()
+    {
+        lives -= 1;
+
+        if (lives <= 0)
+        {
+            lives = 0;
+            healthText.text = 0.ToString();
+            death();
+        }
+        else healthText.text = lives.ToString();
     }
 }

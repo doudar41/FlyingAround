@@ -12,7 +12,7 @@ using UnityEngine;
         private bool fireBool = false, startCoroutine =  true;
         [SerializeField] Transform[] spawnPoints;
         [SerializeField] GameObject projectile;
-        [SerializeField] float deltaFormant = 100f;
+        [SerializeField] float deltaFormant = 100f, fireDelay = 0.3f;
         [SerializeField] Light redLight;
         [SerializeField] GameObject fighter;
         VfxDestroyer vfxDestroyer;
@@ -90,7 +90,7 @@ using UnityEngine;
         
             while (true)
             {
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(fireDelay);
                 SpawnProjectile();
             }
         }
