@@ -93,8 +93,6 @@ using UnityEngine;
                 yield return new WaitForSeconds(0.3f);
                 SpawnProjectile();
             }
-
-           
         }
 
         void SpawnProjectile()
@@ -126,11 +124,10 @@ using UnityEngine;
         {
             GetComponent<BoxCollider>().enabled = false;
             gamebase.AddScore(100);
-            spawn.CommandToSpawn();
+           // spawn.CommandToSpawn();
             ParticleSystem vfx = Instantiate(finaleBlow, gameObject.transform);
             vfx.transform.parent = vfxDestroyer.transform;
-            vfxDestroyer.eventHandler(vfx);
-   
+
             Destroy(fighter);
             deathEnemy -= DeathEnemy;
     }

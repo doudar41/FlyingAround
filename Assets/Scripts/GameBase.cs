@@ -11,10 +11,12 @@ public class GameBase : MonoBehaviour
 {
 
     int score = 0;
+    bool win = false;
 
     public event Action<Vector3> death;
     [SerializeField] GameObject cam;
-    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI scoreText, bestScore, yourScore, finaleMessage;
+    [SerializeField] GameObject endPanel;
     [SerializeField] ScoreBaseScriptable scoreContainer;
 
     private void Start()
@@ -24,39 +26,55 @@ public class GameBase : MonoBehaviour
     public void CallDeath(Vector3 player)
     {
         death(player);
+        win = false;
     }
     private void OnEnable()
     {
         death += EndGame;
     }
 
+
     public void AddScore(int scoreAdd)
     {
+        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        Debug.Log(enemies.Length);
         score += scoreAdd;
         scoreText.text = score.ToString();
+        if (enemies.Length == 1) { win = true; EndGame(GameObject.FindGameObjectWithTag("Player").transform.position); }
+
     }
 
     void EndGame(Vector3 player)
     {
+        if (win)
+        {
+            finaleMessage.text = "All Enemies are Dead";
+        }
+        else finaleMessage.text = "You're Dead";
+
         scoreContainer.scoreList.Add(scoreContainer.scoreList.Count, score);
         Instantiate(cam, player, Quaternion.identity);
         death -= EndGame;
-        StartCoroutine(WaitAndLoad());
+        WaitAndLoad();
+
     }
 
-    IEnumerator WaitAndLoad()
+    void WaitAndLoad()
     {
-        
-        foreach (var i in scoreContainer.scoreList.Values)
+        endPanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.Confined;
+        foreach (int i in scoreContainer.scoreList.Values)
         {
-            Debug.Log(i);
+            if (scoreContainer.bestScore < i) scoreContainer.bestScore = i;
         }
-        
-       
-        yield return new WaitForSeconds(5f);
-        SceneManager.LoadScene(0);
-        
+        yourScore.text = score.ToString();
+        bestScore.text = scoreContainer.bestScore.ToString();
     } 
+
+    public void ReLoadScene()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
 
 

@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;using UnityEngine.Playables;
+using UnityEngine;using UnityEngine.Timeline;
+using UnityEngine.Playables;
 
 public class SpawnManager : MonoBehaviour
 {
 
     [SerializeField] GameObject fighter;
-    [SerializeField] PlayableDirector[] spawnpoint;
+    [SerializeField] GameObject[] spawnpoint;
     [SerializeField] float spawnDelay = 20f;
+    [SerializeField] PlayableDirector[] timelines;
+    [SerializeField] TimelineAsset[] waveTimeline;
+
 
 
     public void CommandToSpawn()
@@ -16,11 +20,28 @@ public class SpawnManager : MonoBehaviour
     }
     IEnumerator SpawnAfterDestroy()
     {
+        
         yield return new WaitForSeconds(spawnDelay);
 
-        Instantiate(fighter);
-        spawnpoint[0].SetGenericBinding(spawnpoint[0], fighter);
+/*        for(int i=0; i < timelines.Length; i++)
+        {
+            waveTimeline[i] = (TimelineAsset)timelines[i].playableAsset;
+        }*/
 
+        for (int i = 0; i < timelines.Length; i++)
+        {
+            foreach (var track in waveTimeline[i].outputs)
+            {
+                
+
+                if (!timelines[i].GetGenericBinding(track.sourceObject)){
+                    var animator = Instantiate(fighter, spawnpoint[i].transform);
+                    timelines[i].SetGenericBinding(track.sourceObject, animator);
+                }
+                    
+
+            }
+        }
         
     }
     

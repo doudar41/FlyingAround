@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
 
     public void ReadMousePosition(InputAction.CallbackContext input)
     {
-        
         yaw = input.ReadValue<Vector2>().x * yawFactor + yaw;
         pitch = input.ReadValue<Vector2>().y * pitchFactor + pitch;
         float pitchClamped = Mathf.Clamp(pitch, clampPitchMin, clampPitchMax);
