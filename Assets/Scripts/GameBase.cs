@@ -73,7 +73,11 @@ public class GameBase : MonoBehaviour
 
     public void ReLoadScene()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
+    }
+    public void EndGame()
+    {
+        Application.Quit();
     }
 }
 
