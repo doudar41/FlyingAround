@@ -518,6 +518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lives: 2
+  scorePoints: 50
   spawnPoints:
   - {fileID: 8567943045519961582}
   - {fileID: 8567943047126813676}
@@ -525,6 +526,7 @@ MonoBehaviour:
   - {fileID: 8567943045750564227}
   projectile: {fileID: 1575518287044516591, guid: 337802942fcd34f42a71683d02e7e5ca, type: 3}
   deltaFormant: 100
+  fireDelay: 0.3
   redLight: {fileID: 8567943047208693070}
   fighter: {fileID: 8567943046305448735}
   explosion: {fileID: 596567670047663166, guid: c39c31cfe4c3080479429a7511b30125, type: 3}

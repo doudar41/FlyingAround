@@ -16,7 +16,7 @@ using UnityEngine;
         [SerializeField] Light redLight;
         VfxDestroyer vfxDestroyer;
         float delta, currentIntensivity;
-    GameBase gameBase;
+        GameBase gameBase;
 
         [SerializeField] ParticleSystem explosion, smoke, fire, finaleBlow;
 
@@ -103,20 +103,21 @@ using UnityEngine;
             redLight.intensity = targetIntensivity;
         }
 
-        void DeathEnemy()
+    void DeathEnemy()
         {
-        gameBase.AddScore(50);
-        VFXSpawner(smoke); VFXSpawner(fire); VFXSpawner(finaleBlow);
+        
         deathEnemy -= DeathEnemy;
-        Destroy(gameObject);
+        gameBase.AddScore(50, gameObject);
+        VFXSpawner(smoke); VFXSpawner(fire); VFXSpawner(finaleBlow);
+        Destroy(gameObject,0.1f);
+        
         }
 
 
     void VFXSpawner(ParticleSystem ps)
-    {
-        ParticleSystem vfx = Instantiate(ps, gameObject.transform);
-        vfx.transform.parent = vfxDestroyer.transform;
-        //vfxDestroyer.eventHandler(vfx);
-    }
+        {
+            ParticleSystem vfx = Instantiate(ps, gameObject.transform);
+            vfx.transform.parent = vfxDestroyer.transform;
+        }
 }
 

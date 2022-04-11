@@ -41,9 +41,10 @@ public class launchProjectile : MonoBehaviour
 
     void DestroyAfterParticle()
     {
-        explosion.Play();
+        ParticleSystem exp = Instantiate(explosion, transform);
+        
 
-        while(explosion.isPlaying)
+        while(exp.isPlaying)
         {
 
         }

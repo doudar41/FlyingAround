@@ -7,7 +7,7 @@ using UnityEngine;
     public class EnemyFighter : MonoBehaviour
     {
 
-        [SerializeField] int lives = 10;
+        [SerializeField] int lives = 10, scorePoints = 10;
         GameObject player;
         private bool fireBool = false, startCoroutine =  true;
         [SerializeField] Transform[] spawnPoints;
@@ -16,7 +16,6 @@ using UnityEngine;
         [SerializeField] Light redLight;
         [SerializeField] GameObject fighter;
         VfxDestroyer vfxDestroyer;
-        SpawnManager spawn;
         GameBase gamebase;
         float delta, currentIntensivity;
 
@@ -28,7 +27,6 @@ using UnityEngine;
         void Start()
         {
             gamebase = FindObjectOfType<GameBase>();
-            spawn = FindObjectOfType<SpawnManager>();
             vfxDestroyer = FindObjectOfType<VfxDestroyer>();
             deathEnemy = DeathEnemy;
             redLight.intensity = 0f;
@@ -48,7 +46,7 @@ using UnityEngine;
         }
         private void OnParticleCollision(GameObject other)
         {
-        Debug.Log("There is collision");
+
             lives -= 1;
             if(explosion != null)
             {
@@ -122,17 +120,21 @@ using UnityEngine;
 
         void DeathEnemy()
         {
+            deathEnemy -= DeathEnemy;
+            gamebase.AddScore(scorePoints, fighter);
             GetComponent<BoxCollider>().enabled = false;
-            gamebase.AddScore(100);
-           // spawn.CommandToSpawn();
             ParticleSystem vfx = Instantiate(finaleBlow, gameObject.transform);
             vfx.transform.parent = vfxDestroyer.transform;
-
+            
+            
             Destroy(fighter);
-            deathEnemy -= DeathEnemy;
-    }
+         }
 
 
+        public int GetBossHealth()
+        {
+            return lives;
+        }
 
 }
 

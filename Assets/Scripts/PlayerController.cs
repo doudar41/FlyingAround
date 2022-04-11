@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+       
     }
 
     public void ReadMousePosition(InputAction.CallbackContext input)
