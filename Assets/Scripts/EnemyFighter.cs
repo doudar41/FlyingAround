@@ -8,7 +8,7 @@ using UnityEngine;
     {
 
         [SerializeField] int lives = 10, scorePoints = 10;
-        GameObject player;
+        GameObject playerShip;
         private bool fireBool = false, startCoroutine =  true;
         [SerializeField] Transform[] spawnPoints;
         [SerializeField] GameObject projectile;
@@ -31,17 +31,22 @@ using UnityEngine;
             deathEnemy = DeathEnemy;
             redLight.intensity = 0f;
             currentIntensivity = 0f;
-            player = GameObject.FindGameObjectWithTag("Player");
+            playerShip = GameObject.FindGameObjectWithTag("Player");
+            gamebase.deathOfPlayer += NullPlayer;
         }
 
 
+        void NullPlayer(Vector3 player)
+        {
+            playerShip = null;
+        }
     void Update()
         {
 
-        if (player == null) return;
+        if (playerShip == null) { fireBool = false; return; }
             
-                transform.LookAt(player.transform);
-                delta = Vector3.Distance(transform.position, player.transform.position);
+                transform.LookAt(playerShip.transform);
+                delta = Vector3.Distance(transform.position, playerShip.transform.position);
                 FireProjectile();
         }
         private void OnParticleCollision(GameObject other)

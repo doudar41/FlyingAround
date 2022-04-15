@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8362653158006001028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8362653158006001027}
+  - component: {fileID: 8362653158006001026}
+  m_Layer: 0
+  m_Name: GameBase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8362653158006001027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8362653158006001028}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 602.43774, y: -228.86365, z: 109.31773}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8362653158006001026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8362653158006001028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ab94591c86fe34e8b585a61e982471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossLevel: 0
+  cam: {fileID: 5593913800120423783, guid: e61e4d1ec75abd44198fa5fd31f9fc2a, type: 3}
+  Boss: {fileID: 0}
+  healthBar: {fileID: 0}
+  scoreText: {fileID: 0}
+  bestScore: {fileID: 0}
+  yourScore: {fileID: 0}
+  finaleMessage: {fileID: 0}
+  endPanel: {fileID: 0}
+  scoreContainer: {fileID: 11400000, guid: 954b6ce7b7b1dca46ba3b81526fe3c22, type: 2}
+  playerInput: {fileID: 0}

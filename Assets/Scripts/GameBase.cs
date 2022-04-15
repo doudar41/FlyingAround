@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 using TMPro;
-
+using UnityEngine.InputSystem;
 public class GameBase : MonoBehaviour
 {
 
@@ -14,9 +14,7 @@ public class GameBase : MonoBehaviour
     List<GameObject> enemies = new List<GameObject>();
 
 
-    event Action<Vector3> deathOfPlayer;
-
-
+    public event Action<Vector3> deathOfPlayer;
 
 
     [SerializeField]bool bossLevel = false;
@@ -25,27 +23,48 @@ public class GameBase : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoreText, bestScore, yourScore, finaleMessage;
     [SerializeField] GameObject endPanel;
     [SerializeField] ScoreBaseScriptable scoreContainer;
+    [SerializeField] PlayerInput playerInput;
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        endPanel.SetActive(false);
+        playerInput.defaultActionMap = "Player";
+        Time.timeScale = 1;
+
         var en = GameObject.FindGameObjectsWithTag("Enemy");
         foreach(GameObject i in en)
         {
             enemies.Add(i);
-            //Debug.Log(i.name);
         }
         
         scoreText.text = score.ToString();
     }
+
+
+    public void OpenMenu()
+    {
+        bool pan = endPanel.active;
+        endPanel.SetActive(!pan);
+        if (!pan) { 
+            playerInput.defaultActionMap = "UI"; 
+            Cursor.lockState = CursorLockMode.Confined;
+            yourScore.text = score.ToString();
+            bestScore.text = scoreContainer.bestScore.ToString();
+            
+        }
+        else { 
+            playerInput.defaultActionMap = "Player"; 
+            Cursor.lockState = CursorLockMode.Locked; 
+        }
+
+        Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+    }
+
     public void CallPlayerDeath(Vector3 player)
     {
         deathOfPlayer(player);
         win = false;
-    }
-    
-    public void CallBossDeath()
-    {
-        
     }
 
     private void OnEnable()
@@ -86,7 +105,6 @@ public class GameBase : MonoBehaviour
         }
     }
 
-
     void BossFight()
     {
         Boss.SetActive(true);
@@ -120,13 +138,50 @@ public class GameBase : MonoBehaviour
         bestScore.text = scoreContainer.bestScore.ToString();
     } 
 
-    public void ReLoadScene()
+
+/*    public void escapeMenu()
     {
+        endPanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.Confined;
+    }*/
+
+    public void ReloadScene()
+    {
+        endPanel.SetActive(true);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void LoadNextScene()
+    {
+        int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
+        
+        if (SceneManager.sceneCountInBuildSettings < nextScene)
+        {
+            SceneManager.LoadScene(0);
+        }
+        else
+        SceneManager.LoadScene(nextScene);
     }
     public void EndGame()
     {
+
+    #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
+                Debug.Log(this.name + " : " + this.GetType() + " : " + System.Reflection.MethodBase.GetCurrentMethod().Name);
+    #endif
+    #if (UNITY_EDITOR)
+                UnityEditor.EditorApplication.isPlaying = false;
+    #elif (UNITY_STANDALONE)
         Application.Quit();
+    #elif (UNITY_WEBGL)
+        Application.OpenURL("about:blank");
+    #endif
+
     }
 }
 

@@ -1,4 +1,5 @@
-using System.Collections;using System;
+using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] Animator rail;
     [SerializeField]  AudioClip[] damageSoundClips;
     [SerializeField] GameObject cam;
+    Vector3 changeSaver, changeRegister;
 
     VfxDestroyer vfxDestroyer;
     GameBase gameBase;
@@ -37,6 +39,10 @@ public class Player : MonoBehaviour
     {
         death -= DestroyShip;
     }
+
+
+
+
 
     private void OnTriggerEnter(Collider other)
     {

@@ -62,7 +62,7 @@ public class TargetingAndShooting : MonoBehaviour
     void SoundAndLightFX()
     {
         StartCoroutine(FireLight(0.1f, 10, 0));
-        audioSource.PlayOneShot(soundOfLaser[Random.Range(0, soundOfLaser.Length - 1)]);
+        audioSource.PlayOneShot(soundOfLaser[Random.Range(0, soundOfLaser.Length - 1)]);//audioSource.PlayOneShot(soundOfLaser[Random.Range(0, soundOfLaser.Length - 1)]);
     }
 
     IEnumerator FXToParticles()
